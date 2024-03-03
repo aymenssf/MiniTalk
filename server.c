@@ -6,7 +6,7 @@
 /*   By: aassaf <aassaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 09:09:38 by aassaf            #+#    #+#             */
-/*   Updated: 2024/02/21 17:25:39 by aassaf           ###   ########.fr       */
+/*   Updated: 2024/03/03 21:50:44 by aassaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,20 @@ void handle_signal(int signal)
     static int i = 0;
 
     if (signal == SIGUSR1)
-        buff |= (1 << (7 - i));
-
-    i++;
+    {
+        buff = buff << 1 | 1;
+        i++;
+    }  
+      
+    else if(signal == SIGUSR2)
+    {
+        buff = buff << 1;
+        i++;
+    }
     if (i == 8)
     {
-        printf("%c\n", buff);
+       write(1, &buff, 1);
+        // printf("\n");
         i = 0;
         buff = 0;
     }
@@ -35,7 +43,7 @@ int main(void)
 
     signal(SIGUSR1, handle_signal);
     signal(SIGUSR2, handle_signal);
-
+    
     while (1)
         pause();
 }
