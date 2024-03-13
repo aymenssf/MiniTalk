@@ -6,13 +6,13 @@
 /*   By: aassaf <aassaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 09:09:25 by aassaf            #+#    #+#             */
-/*   Updated: 2024/03/11 20:27:49 by aassaf           ###   ########.fr       */
+/*   Updated: 2024/03/13 01:57:13 by aassaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void	send_signal(int pid, unsigned char character)
+void	send_signal(int pid, char character)
 {
 	int	i;
 
@@ -31,22 +31,22 @@ void	send_signal(int pid, unsigned char character)
 int	main(int ac, char **av)
 {
 	int	pid;
-	int	i;
+	int	i;			
 
-	if (ft_isdigit(ft_atoi(av[1])) == 0)
-		exit(1);
 	i = 0;
 	if (ac != 3)
 	{
 		printf("ERROR: ./client [PID] [string]\n");
-		return (1);
+		exit(1);
 	}
+	if (ft_atoi(av[1]) == 0)
+		exit(1);
 	pid = ft_atoi(av[1]);
 	if (pid == -1)
 		return (-1);
 	while (av[2][i] != '\0')
 	{
-		send_signal(pid, (unsigned char)av[2][i]);
+		send_signal(pid, av[2][i]);
 		i++;
 	}
 	return (0);

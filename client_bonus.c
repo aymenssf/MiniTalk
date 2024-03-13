@@ -6,7 +6,7 @@
 /*   By: aassaf <aassaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:28:06 by aassaf            #+#    #+#             */
-/*   Updated: 2024/03/11 20:30:07 by aassaf           ###   ########.fr       */
+/*   Updated: 2024/03/12 21:10:42 by aassaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,14 @@ int	main(int ac, char **av)
 	int	pid;
 	int	i;
 
-	if (ft_isdigit(ft_atoi(av[1])) == 0)
-		exit(1);
 	i = 0;
 	if (ac != 3)
 	{
 		printf("ERROR: ./client_bonus [PID] [string]\n");
-		return (1);
+		exit(1);
 	}
+	if (ft_atoi(av[1]) == 0)
+		exit(1);
 	pid = ft_atoi(av[1]);
 	if (pid == -1)
 		return (-1);

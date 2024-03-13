@@ -6,7 +6,7 @@
 /*   By: aassaf <aassaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:28:16 by aassaf            #+#    #+#             */
-/*   Updated: 2024/03/12 18:21:04 by aassaf           ###   ########.fr       */
+/*   Updated: 2024/03/12 20:40:11 by aassaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int	main(int ac, char **av)
 	printf("Server PID: %d\n", getpid());
 	usleep(50);
 	sa.sa_sigaction = handle_signal;
-	if (sigaction(SIGUSR1, &sa, NULL) == -1 || sigaction(SIGUSR2, &sa, NULL) ==
-		-1);
+	if (sigaction(SIGUSR1, &sa, NULL) == -1 || sigaction(SIGUSR2, &sa, NULL)
+		== -1)
 		return (-1);
 	while (1)
 		pause();
