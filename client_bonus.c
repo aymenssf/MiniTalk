@@ -6,7 +6,7 @@
 /*   By: aassaf <aassaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:28:06 by aassaf            #+#    #+#             */
-/*   Updated: 2024/03/12 21:10:42 by aassaf           ###   ########.fr       */
+/*   Updated: 2024/03/14 00:37:02 by aassaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	handle_ack(int signal)
 {
 	if (signal == SIGUSR1)
 	{
-		printf("Message received successfully!\n");
+		write(1, "Message received successfully!\n", 31);
 		exit(0);
 	}
 	if (signal == SIGUSR2)
@@ -31,9 +31,15 @@ void	send_char(int pid, char character)
 	while (i >= 0)
 	{
 		if ((character >> i) & 1)
-			kill(pid, SIGUSR1);
+		{
+			if(kill(pid, SIGUSR1) == -1)
+				exit(1);
+		}
 		else
-			kill(pid, SIGUSR2);
+		{
+			if(kill(pid, SIGUSR2) == -1)
+				exit(1);
+		}
 		i--;
 		usleep(400);
 	}
@@ -56,22 +62,17 @@ void	send_string(int pid, char *string)
 
 int	main(int ac, char **av)
 {
-	int	pid;
+	pid_t	pid;
 	int	i;
-
 	i = 0;
 	if (ac != 3)
 	{
-		printf("ERROR: ./client_bonus [PID] [string]\n");
+		write(1, "ERROR: ./client [PID] [string]\n", 31);
 		exit(1);
 	}
-	if (ft_atoi(av[1]) == 0)
+	if (ft_atoi(av[1]) == 0 || !is_valid_pid(av[1]))
 		exit(1);
 	pid = ft_atoi(av[1]);
-	if (pid == -1)
-		return (-1);
 	send_string(pid, av[2]);
-	while (1)
-		;
 	return (0);
 }

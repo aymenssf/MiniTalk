@@ -7,14 +7,14 @@ OBJB	= $(SRCB:.c=.o)
 all	  : server client
 
 server: server.c
-	$(CC) $(CFLAGS) -o server server.c
+	$(CC) $(CFLAGS) -o server server.c utils.c
 client: client.c
 	$(CC) $(CFLAGS) -o client client.c utils.c
 
 bonus : server_bonus client_bonus
 
 server_bonus : server_bonus.c
-	$(CC) $(CFLAGS) -o server_bonus server_bonus.c
+	$(CC) $(CFLAGS) -o server_bonus server_bonus.c utils.c
 
 client_bonus : client_bonus.c
 	$(CC) $(CFLAGS) -o client_bonus client_bonus.c utils.c

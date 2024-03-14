@@ -6,7 +6,7 @@
 /*   By: aassaf <aassaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 09:09:38 by aassaf            #+#    #+#             */
-/*   Updated: 2024/03/12 21:24:06 by aassaf           ###   ########.fr       */
+/*   Updated: 2024/03/13 21:40:40 by aassaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,11 @@ void	handle_signal(int signal)
 int	main(int ac, char **av)
 {
 	(void)av;
-	if (ac > 1)
+	if (ac != 1)
 		exit(1);
-	printf("Server PID: %d\n", getpid());
+	write(1, "Server PID: ", 13);
+	ft_putnbr(getpid());
+	write(1, "\n", 1);
 	usleep(50);
 	signal(SIGUSR1, handle_signal);
 	signal(SIGUSR2, handle_signal);

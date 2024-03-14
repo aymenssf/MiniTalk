@@ -6,7 +6,7 @@
 /*   By: aassaf <aassaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:28:16 by aassaf            #+#    #+#             */
-/*   Updated: 2024/03/12 20:40:11 by aassaf           ###   ########.fr       */
+/*   Updated: 2024/03/14 04:15:48 by aassaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ void	handle_signal(int signal, siginfo_t *info, void *s)
 	{
 		write(1, &buff, 1);
 		if (buff == '\0')
-			kill(pid, SIGUSR1);
+		{
+			if(kill(pid, SIGUSR1) == -1)
+				exit(1);
+		}
 		i = 0;
 		buff = 0;
 	}
@@ -42,7 +45,9 @@ int	main(int ac, char **av)
 	(void)av;
 	if (ac > 1)
 		exit(1);
-	printf("Server PID: %d\n", getpid());
+	write(1, "Server PID: ", 13);
+	ft_putnbr(getpid());
+	write(1, "\n", 1);
 	usleep(50);
 	sa.sa_sigaction = handle_signal;
 	if (sigaction(SIGUSR1, &sa, NULL) == -1 || sigaction(SIGUSR2, &sa, NULL)

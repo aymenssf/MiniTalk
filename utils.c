@@ -6,15 +6,20 @@
 /*   By: aassaf <aassaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 20:27:39 by aassaf            #+#    #+#             */
-/*   Updated: 2024/03/11 20:27:50 by aassaf           ###   ########.fr       */
+/*   Updated: 2024/03/13 21:39:11 by aassaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isdigit(int c)
+#include "minitalk.h"
+int is_valid_pid(const char *str)
 {
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
+    while (*str != '\0')
+	{
+        if (*str < '0' || *str > '9')
+            return 0;
+        str++;
+    }
+    return 1;
 }
 
 int	ft_atoi(const char *str)
@@ -36,4 +41,17 @@ int	ft_atoi(const char *str)
 		str++;
 	}
 	return (res * sign);
+}
+void	ft_putnbr(int n)
+{
+	char	c;
+
+	if (n >= 10)
+	{
+		ft_putnbr(n / 10);
+		ft_putnbr(n % 10);
+		return ;
+	}
+	c = n + '0';
+	write(1, &c, 1);
 }
